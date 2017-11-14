@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _4.Average_Grades
+{
+    class Student
+    {
+        public string name { get; set; }
+        public List<double> grades { get; set; }
+        public double averageGrade
+        {
+            get
+            {
+                return grades.Average();
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int entry = int.Parse(Console.ReadLine());
+            List<Student> students = new List<Student>();
+            for (int i = 0; i < entry; i++)
+            {
+                Student oneStudent = new Student();
+                List<string> studentData = Console.ReadLine().Split().ToList();
+                oneStudent.name = studentData[0];
+                List<double> oneStudentGrades = new List<double>();
+                for (int grade = 1; grade < studentData.Count; grade++)
+                {
+                    double studentGrade = double.Parse(studentData[grade]);
+                    oneStudentGrades.Add(studentGrade);
+                }
+                oneStudent.grades = oneStudentGrades;
+                students.Add(oneStudent);
+            }
+          
+            foreach (var student in students.OrderBy(student => student.name).ThenByDescending(student => student.averageGrade).ToList())
+            {
+                if (student.averageGrade >= 5)
+                {
+                    Console.WriteLine("{0:f2} -> {1:f2}", student.name, student.averageGrade);
+                }
+
+            }
+        }
+    }
+}
